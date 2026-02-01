@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>For You 💖</title>
   <link rel="stylesheet" href="style.css">
 </head>
@@ -20,38 +21,28 @@
   <!-- QUESTION BOX -->
   <div class="container" id="box">
     <h1>Anjalii!! Will you be my Valentine? 🥹💖</h1>
-
     <div class="buttons">
       <button id="yes">Yes 😍</button>
       <button id="no">No 🙃</button>
     </div>
   </div>
 
-  <!-- FINAL SCREEN -->
-  <!-- <div class="final" id="final">
-    <h1>Happy Valentine’s Day 💕</h1>
-    <div class="heart">
-      🩷<br>
-      Anjali <br>&<br>
-      Shourya
-    </div>
-  </div> -->
+  <!-- CELEBRATION TEXT (yaaay popup) -->
   <div id="celebrateText">
-  yaaayyyyy 😽😽🩷🩷🥳🥳
-</div>
-  <div id="celebrateText">
+    yaaayyyyy 😽😽🩷🩷🥳🥳
+  </div>
+
+  <!-- FINAL LOVE SCREEN (completely separate, not nested) -->
   <div id="finalLove">
-  <div class="photo-wrap">
-    <img src="./us.jpg" alt="Us ❤️">
-  </div>
-  <div class="final-text">
-    I Love You Baby!! 🥹
-  </div>
-</div>
+    <div class="photo-wrap">
+      <img src="./us.jpg" alt="Us ❤️" id="finalImg">
     </div>
+    <div class="final-text">
+      I Love You Baby!! 🥹
+    </div>
+  </div>
 
   <canvas id="confetti"></canvas>
-
   <script src="script.js"></script>
 </body>
 </html>
