@@ -1,14 +1,13 @@
 const celebrateText = document.getElementById("celebrateText");
-const intro = document.getElementById("intro");
+const intro         = document.getElementById("intro");
+const startBtn      = document.getElementById("start");
+const box           = document.getElementById("box");
+const noBtn         = document.getElementById("no");
+const yesBtn        = document.getElementById("yes");
+const finalLove     = document.getElementById("finalLove");
+const hearts        = document.querySelector(".hearts");
 
-const startBtn = document.getElementById("start");
-const box = document.getElementById("box");
-const noBtn = document.getElementById("no");
-const yesBtn = document.getElementById("yes");
-// const final = document.getElementById("final");
-const hearts = document.querySelector(".hearts");
-
-/* Floating Hearts */
+/* ─── Floating Hearts ─── */
 setInterval(() => {
   const h = document.createElement("span");
   h.innerHTML = "💗";
@@ -17,71 +16,61 @@ setInterval(() => {
   setTimeout(() => h.remove(), 6000);
 }, 350);
 
-/* Intro to Question */
+/* ─── Intro → Question ─── */
 startBtn.onclick = () => {
   intro.style.display = "none";
-  box.style.display = "block";
+  box.style.display   = "block";
 };
 
-/* No Button – only bhagega */
-noBtn.addEventListener("mouseover", () => {
+/* ─── No Button – runs away ─── */
+const moveNoButton = () => {
   const padding = 20;
-
-  const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+  const maxX = window.innerWidth  - noBtn.offsetWidth  - padding;
   const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+  noBtn.style.left = (Math.random() * maxX) + "px";
+  noBtn.style.top  = (Math.random() * maxY) + "px";
+};
 
-  const x = Math.random() * maxX;
-  const y = Math.random() * maxY;
+noBtn.addEventListener("mouseover",  moveNoButton); // desktop
+noBtn.addEventListener("touchstart", moveNoButton); // mobile
 
-  noBtn.style.left = x + "px";
-  noBtn.style.top = y + "px";
-});
-
-/* YES = 5 sec celebration */
-const canvas = document.getElementById("confetti");
-const ctx = canvas.getContext("2d");
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-let confetti = [];
-let animation;
-
+/* ─── Yes Button → Celebrate → Final Screen ─── */
 yesBtn.onclick = () => {
   box.style.display = "none";
 
-  // show yaaay first
+  // 1) Show "yaaay" popup
   celebrateText.style.display = "block";
-  blastEffect();
 
-  // after 3 seconds → show photo screen
+  // 2) Blast + confetti + vibrate all at once
+  blastEffect();
+  startConfetti();
+  vibratePhone();
+
+  // 3) After 3 seconds → hide popup, show the love screen
   setTimeout(() => {
     celebrateText.style.display = "none";
-    document.getElementById("finalLove").style.display = "flex";
+    stopConfetti();
+    finalLove.style.display = "flex";   // ← this actually shows it now
   }, 3000);
 };
-const moveNoButton = () => {
-  const padding = 20;
-  const maxX = window.innerWidth - noBtn.offsetWidth - padding;
-  const maxY = window.innerHeight - noBtn.offsetHeight - padding;
 
-  const x = Math.random() * maxX;
-  const y = Math.random() * maxY;
+/* ─── Confetti ─── */
+const canvas = document.getElementById("confetti");
+const ctx    = canvas.getContext("2d");
+canvas.width  = window.innerWidth;
+canvas.height = window.innerHeight;
+let confetti  = [];
+let animation;
 
-  noBtn.style.left = x + "px";
-  noBtn.style.top = y + "px";
-};
-
-noBtn.addEventListener("mouseover", moveNoButton);   // desktop
-noBtn.addEventListener("touchstart", moveNoButton); // mobile
 function startConfetti() {
   confetti = [];
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < 120; i++) {
     confetti.push({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height - canvas.height,
-      r: Math.random() * 6 + 2,
-      d: Math.random() * 5 + 2,
-      color: `hsl(${Math.random() * 360},100%,70%)`
+      x:     Math.random() * canvas.width,
+      y:     Math.random() * canvas.height - canvas.height,
+      r:     Math.random() * 6 + 2,
+      d:     Math.random() * 5 + 2,
+      color: `hsl(${Math.random() * 360}, 100%, 65%)`
     });
   }
   animate();
@@ -95,33 +84,13 @@ function animate() {
     ctx.arc(c.x, c.y, c.r, 0, Math.PI * 2);
     ctx.fill();
     c.y += c.d;
+    // wrap around when it falls off bottom
+    if (c.y > canvas.height) {
+      c.y = -10;
+      c.x = Math.random() * canvas.width;
+    }
   });
   animation = requestAnimationFrame(animate);
-}
-function blastEffect() {
-  document.body.classList.add("shake");
-
-  for (let i = 0; i < 80; i++) {
-    const particle = document.createElement("div");
-    particle.className = "blast";
-    particle.innerHTML = Math.random() > 0.5 ? "💖" : "💥";
-
-    const x = (Math.random() - 0.5) * 300 + "px";
-    const y = (Math.random() - 0.5) * 300 + "px";
-
-    particle.style.setProperty("--x", x);
-    particle.style.setProperty("--y", y);
-    particle.style.left = "50%";
-    particle.style.top = "50%";
-
-    document.body.appendChild(particle);
-
-    setTimeout(() => particle.remove(), 1200);
-  }
-
-  setTimeout(() => {
-    document.body.classList.remove("shake");
-  }, 500);
 }
 
 function stopConfetti() {
@@ -129,14 +98,35 @@ function stopConfetti() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
-function goFullScreen() {
-  const el = document.documentElement;
-  if (el.requestFullscreen) el.requestFullscreen();
-  else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen(); // Safari
+/* ─── Blast Effect ─── */
+function blastEffect() {
+  document.body.classList.add("shake");
+
+  for (let i = 0; i < 80; i++) {
+    const particle = document.createElement("div");
+    particle.className = "blast";
+    particle.innerHTML = Math.random() > 0.5 ? "💖" : "💥";
+    particle.style.setProperty("--x", (Math.random() - 0.5) * 300 + "px");
+    particle.style.setProperty("--y", (Math.random() - 0.5) * 300 + "px");
+    particle.style.left = "50%";
+    particle.style.top  = "50%";
+    document.body.appendChild(particle);
+    setTimeout(() => particle.remove(), 1200);
+  }
+
+  setTimeout(() => document.body.classList.remove("shake"), 500);
 }
 
+/* ─── Vibrate (mobile) ─── */
 function vibratePhone() {
   if (navigator.vibrate) {
     navigator.vibrate([200, 100, 200, 100, 300]);
   }
+}
+
+/* ─── Fullscreen helper (call whenever you want) ─── */
+function goFullScreen() {
+  const el = document.documentElement;
+  if (el.requestFullscreen)       el.requestFullscreen();
+  else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
 }
