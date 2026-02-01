@@ -56,7 +56,7 @@ yesBtn.onclick = () => {
   celebrateText.style.display = "block";
 
   // 🔥 IMMERSIVE EFFECTS
-  goFullScreen();     // fullscreen
+  // goFullScreen();     // fullscreen
   vibratePhone();    // mobile vibration
   blastEffect();     // tagda blast 💥
 
@@ -67,6 +67,20 @@ yesBtn.onclick = () => {
   // END SCENE – freeze moment ❤️
 };
 
+const moveNoButton = () => {
+  const padding = 20;
+  const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+  const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+
+  const x = Math.random() * maxX;
+  const y = Math.random() * maxY;
+
+  noBtn.style.left = x + "px";
+  noBtn.style.top = y + "px";
+};
+
+noBtn.addEventListener("mouseover", moveNoButton);   // desktop
+noBtn.addEventListener("touchstart", moveNoButton); // mobile
 function startConfetti() {
   confetti = [];
   for (let i = 0; i < 100; i++) {
