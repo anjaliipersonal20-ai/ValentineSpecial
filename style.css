@@ -177,3 +177,48 @@ button {
 html, body {
   touch-action: manipulation;
 }
+
+/* 📱 Mobile Responsive Fix */
+@media (max-width: 600px) {
+
+  body {
+    padding: 20px;
+  }
+
+  .intro, .container {
+    width: 100%;
+    padding: 30px 20px;
+  }
+
+  h1 {
+    font-size: 24px;
+  }
+
+  .intro p {
+    font-size: 16px;
+  }
+
+  button {
+    font-size: 16px;
+    padding: 12px 22px;
+  }
+
+  .buttons {
+    height: 160px;
+  }
+
+  #celebrateText {
+    width: 90%;
+    font-size: 28px;
+    padding: 20px;
+    text-align: center;
+  }
+
+  #celebrateText span {
+    font-size: 18px;
+  }
+
+  .blast {
+    font-size: 22px;
+  }
+}
