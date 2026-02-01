@@ -222,3 +222,23 @@ html, body {
     font-size: 22px;
   }
 }
+
+/* 💖 Final Photo + Text */
+.photo-wrap {
+  margin-bottom: 15px;
+}
+
+.photo-wrap img {
+  width: 140px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 20px;
+  border: 4px solid #ff4d6d;
+  box-shadow: 0 0 20px rgba(255, 0, 100, 0.6);
+}
+
+.final-text {
+  font-size: 26px;
+  color: #ff0055;
+  font-weight: bold;
+}
