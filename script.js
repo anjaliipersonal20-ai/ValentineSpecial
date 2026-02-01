@@ -49,24 +49,14 @@ let animation;
 yesBtn.onclick = () => {
   box.style.display = "none";
 
-  celebrateText.innerHTML = `
-    yaaayyyyy 😽😽🩷🩷🥳🥳 <br>
-    <span>i love you so so so much baby 💖</span>
-  `;
   celebrateText.style.display = "block";
-
-  // 🔥 IMMERSIVE EFFECTS
-  // goFullScreen();     // fullscreen
-  vibratePhone();    // mobile vibration
-  blastEffect();     // tagda blast 💥
-
-  // 🎵 music (soft & romantic)
-//   loveMusic.volume = 0.3;
-//   loveMusic.play().catch(() => {});
-
-  // END SCENE – freeze moment ❤️
+  blastEffect();
+  
+  setTimeout(() => {
+    celebrateText.style.display = "none";
+    document.getElementById("finalLove").style.display = "block";
+  }, 3000);
 };
-
 const moveNoButton = () => {
   const padding = 20;
   const maxX = window.innerWidth - noBtn.offsetWidth - padding;
