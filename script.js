@@ -49,12 +49,14 @@ let animation;
 yesBtn.onclick = () => {
   box.style.display = "none";
 
+  // show yaaay first
   celebrateText.style.display = "block";
   blastEffect();
-  
+
+  // after 3 seconds → show photo screen
   setTimeout(() => {
     celebrateText.style.display = "none";
-    document.getElementById("finalLove").style.display = "block";
+    document.getElementById("finalLove").style.display = "flex";
   }, 3000);
 };
 const moveNoButton = () => {
